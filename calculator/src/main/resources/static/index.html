@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <div class="header">
+                <h1>🧮 Calculator</h1>
+                <p class="subtitle">Simple Web Calculator</p>
+            </div>
+
+            <div class="display-section">
+                <input type="text" id="display" class="display" placeholder="0" readonly>
+                <div class="history" id="history"></div>
+            </div>
+
+            <div class="button-grid">
+                <!-- Row 1 -->
+                <button class="btn btn-function" onclick="clearDisplay()">C</button>
+                <button class="btn btn-function" onclick="deleteLastChar()">DEL</button>
+                <button class="btn btn-function" onclick="performSqrt()">√</button>
+                <button class="btn btn-operator" onclick="setOperator('/')">/</button>
+
+                <!-- Row 2 -->
+                <button class="btn btn-number" onclick="appendNumber('7')">7</button>
+                <button class="btn btn-number" onclick="appendNumber('8')">8</button>
+                <button class="btn btn-number" onclick="appendNumber('9')">9</button>
+                <button class="btn btn-operator" onclick="setOperator('*')">*</button>
+
+                <!-- Row 3 -->
+                <button class="btn btn-number" onclick="appendNumber('4')">4</button>
+                <button class="btn btn-number" onclick="appendNumber('5')">5</button>
+                <button class="btn btn-number" onclick="appendNumber('6')">6</button>
+                <button class="btn btn-operator" onclick="setOperator('-')">-</button>
+
+                <!-- Row 4 -->
+                <button class="btn btn-number" onclick="appendNumber('1')">1</button>
+                <button class="btn btn-number" onclick="appendNumber('2')">2</button>
+                <button class="btn btn-number" onclick="appendNumber('3')">3</button>
+                <button class="btn btn-operator" onclick="setOperator('+')">+</button>
+
+                <!-- Row 5 -->
+                <button class="btn btn-number" style="grid-column: span 2;" onclick="appendNumber('0')">0</button>
+                <button class="btn btn-number" onclick="appendNumber('.')">.</button>
+                <button class="btn btn-power" onclick="setPower()">^</button>
+
+                <!-- Row 6 -->
+                <button class="btn btn-equals" style="grid-column: span 4;" onclick="calculate()">=</button>
+            </div>
+
+            <div class="info-section">
+                <p class="status" id="status">Ready</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
