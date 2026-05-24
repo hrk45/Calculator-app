@@ -5,6 +5,9 @@ pipeline {
         booleanParam(name: 'RUN_DOCKER', defaultValue: false, description: 'Run Docker build stage')
     }
     stages {
+    when {
+        expression { params.RUN_MAVEN }
+    }
                 stage('mvn clean build')
                 {
                     steps
@@ -15,6 +18,9 @@ pipeline {
                     }
                 }
                 stage('Docker Build & Push') {
+                        when {
+        expression { params.RUN_DOCKER }
+    }
                     steps {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
                                                         usernameVariable: 'DOCKER_USER',
