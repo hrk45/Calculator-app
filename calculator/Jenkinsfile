@@ -8,7 +8,7 @@ pipeline {
                                                   passwordVariable: 'DOCKER_PASS')]) {
                     bat """
                     echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
-                    docker build -t calculator-app:latest .
+                    docker build -t calculator/calculator-app:latest .
                     docker tag calculator-app:latest %DOCKER_USER%/calculator-app:latest
                     docker push %DOCKER_USER%/calculator-app:latest
                     """
