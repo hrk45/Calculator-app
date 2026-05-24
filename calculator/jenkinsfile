@@ -1,4 +1,4 @@
-stage('Docker Push Test') {
+stage('Docker push Test') {
     steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
                                           usernameVariable: 'DOCKER_USER',
