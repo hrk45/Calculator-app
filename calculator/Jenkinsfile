@@ -1,14 +1,12 @@
 pipeline {
     agent any
-    parameters{
-        choice(name: 'build_options', choices: ['build', 'docker build & push'], description: 'Select the build option')
+    parameters {
+        booleanParam(name: 'RUN_MAVEN', defaultValue: true, description: 'Run Maven build stage')
+        booleanParam(name: 'RUN_DOCKER', defaultValue: false, description: 'Run Docker build stage')
     }
     stages {
                 stage('mvn clean build')
                 {
-                    when {
-                        expression { params.build.options == 'build'}
-                    }
                     steps
                     {
                        dir('calculator') {
@@ -17,9 +15,6 @@ pipeline {
                     }
                 }
                 stage('Docker Build & Push') {
-                    when {
-                        expression { params.build_options == 'docker build & push'}
-                    }
                     steps {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
                                                         usernameVariable: 'DOCKER_USER',
