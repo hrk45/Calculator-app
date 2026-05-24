@@ -6,7 +6,12 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
                                                   usernameVariable: 'DOCKER_USER',
                                                   passwordVariable: 'DOCKER_PASS')]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    bat """
+                    echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
+                    docker build -t calculator-app:latest .
+                    docker tag calculator-app:latest %DOCKER_USER%/calculator-app:latest
+                    docker push %DOCKER_USER%/calculator-app:latest
+                    """
                 }
             }
         }
