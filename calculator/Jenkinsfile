@@ -1,14 +1,25 @@
 pipeline {
     agent any
+    parameters{
+        choice(name: 'build_options', choices: ['build', 'docker build & push'], description: 'Select the build option')
+    }
     stages {
                 stage('mvn clean build')
                 {
+                    when {
+                        expression { params.build.options == 'build'}
+                    }
                     steps
                     {
-                        bat 'cd calculator && mvn clean install'
+                       dir('calculator') {
+                            bat 'mvn clean install'
+                        }
                     }
                 }
                 stage('Docker Build & Push') {
+                    when {
+                        expression { params.build_options == 'docker build & push'}
+                    }
                     steps {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
                                                         usernameVariable: 'DOCKER_USER',
