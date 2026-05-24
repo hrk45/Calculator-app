@@ -5,7 +5,7 @@ pipeline {
                 {
                     steps
                     {
-                        bat 'mvn clean install'
+                        bat 'cd calculator && mvn clean install'
                     }
                 }
                 stage('Docker Build & Push') {
