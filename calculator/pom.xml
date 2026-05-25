@@ -6,7 +6,7 @@
 
     <groupId>com.calculator</groupId>
     <artifactId>calculator-app</artifactId>
-    <version>1.2.0</version>
+    <version>1.31.0</version>
     <packaging>jar</packaging>
 
     <name>Calculator App</name>
@@ -51,6 +51,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Micrometer Registry for Prometheus -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
     </dependencies>
 
