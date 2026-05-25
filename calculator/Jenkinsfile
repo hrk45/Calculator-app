@@ -48,7 +48,6 @@ pipeline {
                         }
                     }
                 }
-    }
     stage('Deploy to kubenestes')
       {
         when {
@@ -59,5 +58,6 @@ pipeline {
             bat 'kubectl apply -f devops/'
         }
       }
+    }
 }
 
