@@ -23,15 +23,25 @@ pipeline {
         expression { params.RUN_DOCKER }
     }
                     steps {
-                        withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
-                                                        usernameVariable: 'DOCKER_USER',
-                                                        passwordVariable: 'DOCKER_PASS')]) {
-                            bat """
-                            echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
-                            docker build -t calculator-app:latest -f calculator/Dockerfile calculator/
-                            docker tag calculator-app:latest %DOCKER_USER%/calculator-app:latest
-                            docker push %DOCKER_USER%/calculator-app:latest
-                            """
+                        script {
+                            def version = bat(
+                                script: 'cd calculator && mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                                returnStdout: true
+                            ).trim()
+                            
+                            withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
+                                                            usernameVariable: 'DOCKER_USER',
+                                                            passwordVariable: 'DOCKER_PASS')]) {
+                                bat """
+                                echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
+                                docker build -t calculator-app:${version} -f calculator/Dockerfile calculator/
+                                docker tag calculator-app:${version} calculator-app:latest
+                                docker tag calculator-app:${version} %DOCKER_USER%/calculator:${version}
+                                docker tag calculator-app:${version} %DOCKER_USER%/calculator:latest
+                                docker push %DOCKER_USER%/calculator:${version}
+                                docker push %DOCKER_USER%/calculator:latest
+                                """
+                            }
                         }
                     }
                 }
