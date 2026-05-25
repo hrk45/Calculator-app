@@ -55,7 +55,7 @@ pipeline {
         }
         steps
         {
-            bat 'kubectl apply -f devops/'
+            bat 'kubectl apply -f calculator\\devops\\'
         }
       }
     }

@@ -6,7 +6,11 @@
 
     <groupId>com.calculator</groupId>
     <artifactId>calculator-app</artifactId>
+<<<<<<< HEAD
     <version>1.31.0</version>
+=======
+    <version>1.4.0</version>
+>>>>>>> 51d7d89586546c7717e59e3a9416534ef15edd61
     <packaging>jar</packaging>
 
     <name>Calculator App</name>
