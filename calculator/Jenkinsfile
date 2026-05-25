@@ -26,7 +26,7 @@ pipeline {
                 {
                 when {
                      expression { params.RUN_DOCKER }
-                    
+                }
                     steps {
                         script {
                             def pomFile = readFile('calculator/pom.xml')
@@ -60,4 +60,4 @@ pipeline {
         }
       }
 }
-}
+
