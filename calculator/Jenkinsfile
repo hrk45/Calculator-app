@@ -3,25 +3,30 @@ pipeline {
     parameters {
         booleanParam(name: 'RUN_MAVEN', defaultValue: true, description: 'Run Maven build stage')
         booleanParam(name: 'RUN_DOCKER', defaultValue: false, description: 'Run Docker build stage')
+        booleanParam(name: 'RUN_DEPLOYMENT', defaultValue: false, description: 'Run Kubernetes deployment stage')
     }
     stages {
 
                 stage('mvn clean build')
                 {
-                        when {
-        expression { params.RUN_MAVEN }
-    }
-                    steps
+                    when 
                     {
-                       dir('calculator') {
-                            bat 'mvn clean install'
-                        }
+                        expression { params.RUN_MAVEN }
+                              
                     }
+                    steps
+                       {
+                       dir('calculator') 
+                          {
+                            bat 'mvn clean install'
+                          }
+                       }
                 }
-                stage('Docker Build & Push') {
-                        when {
-        expression { params.RUN_DOCKER }
-    }
+                stage('Docker Build & Push') 
+                {
+                when {
+                     expression { params.RUN_DOCKER }
+                    
                     steps {
                         script {
                             def pomFile = readFile('calculator/pom.xml')
@@ -44,4 +49,14 @@ pipeline {
                     }
                 }
     }
+    stage('Deploy to kubenestes')
+      {
+        when {
+            expression { params.RUN_DEPLOYMENT }
+        }
+        steps
+        {
+            bat 'kubectl apply -f devops/'
+        }
+      }
 }
